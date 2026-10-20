@@ -1,0 +1,36 @@
+name: check
+
+# Chequeo de sitios cada 15 minutos. Commitea solo data/; ese commit no dispara
+# pages.yml (filtro por paths) y mantiene vivo el cron: GitHub apaga los
+# schedules de repos sin actividad en 60 días.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Chequear sitios
+        run: python3 check.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Guardar datos
+        run: |
+          git config user.name "epicflow-status"
+          git config user.email "epicflow-status@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -q -m "datos $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull -q --rebase && git push -q

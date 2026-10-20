@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Estado del sitio · {{NOMBRE}}</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--abyss:#0a0e12;--deep:#11161c;--reef:#1a2128;--line:#232c35;--ocean:#38bdf8;--foam:#f0f3f5;--mist:#9aa3ad;
+--up:#34d399;--down:#f87171;--warn:#fbbf24;--none:#2a333d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--abyss);color:var(--foam);font:16px/1.55 "IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;min-height:100vh}
+main{max-width:760px;margin:0 auto;padding:48px 20px 40px}
+.marca{color:var(--mist);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+h1{font:700 clamp(28px,6vw,40px)/1.1 "Bricolage Grotesque",sans-serif;margin:8px 0 4px}
+.url{color:var(--mist);font-size:14px;word-break:break-all}
+.estado{margin:28px 0;padding:22px 24px;border-radius:14px;background:var(--deep);border:1px solid var(--line);display:flex;align-items:center;gap:16px}
+.punto{width:14px;height:14px;border-radius:50%;background:var(--none);flex:none;box-shadow:0 0 0 6px rgba(255,255,255,.04)}
+.estado.up .punto{background:var(--up);box-shadow:0 0 0 6px rgba(52,211,153,.15)}
+.estado.down .punto{background:var(--down);box-shadow:0 0 0 6px rgba(248,113,113,.15)}
+.estado strong{font:600 20px "Bricolage Grotesque",sans-serif;display:block}
+.estado span{color:var(--mist);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:var(--deep);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{display:block;font:600 26px "Bricolage Grotesque",sans-serif}
+.kpi small{color:var(--mist);font-size:13px}
+h2{font:600 16px "Bricolage Grotesque",sans-serif;margin:32px 0 10px}
+.barras{display:flex;gap:2px;height:40px;align-items:stretch}
+.barras i{flex:1;border-radius:2px;background:var(--none);min-width:2px}
+.barras i.up{background:var(--up)}.barras i.warn{background:var(--warn)}.barras i.down{background:var(--down)}
+.eje{display:flex;justify-content:space-between;color:var(--mist);font-size:12px;margin-top:6px}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--mist);font-size:13px}
+footer a{color:var(--ocean);text-decoration:none}
+.error{color:var(--warn)}
+</style>
+</head>
+<body>
+<main>
+  <div class="marca">Epic Flow AI · Monitoreo</div>
+  <h1>{{NOMBRE}}</h1>
+  <div class="url" id="url"></div>
+
+  <div class="estado" id="estado"><div class="punto"></div><div><strong>Cargando…</strong><span>Consultando el último chequeo</span></div></div>
+
+  <div class="kpis">
+    <div class="kpi"><b id="up30">—</b><small>Disponibilidad 30 días</small></div>
+    <div class="kpi"><b id="up90">—</b><small>Disponibilidad 90 días</small></div>
+    <div class="kpi"><b id="ssl">—</b><small>Certificado de seguridad</small></div>
+    <div class="kpi"><b id="ms">—</b><small>Tiempo de respuesta</small></div>
+  </div>
+
+  <h2>Últimos 90 días</h2>
+  <div class="barras" id="barras" role="img" aria-label="Disponibilidad diaria de los últimos 90 días"></div>
+  <div class="eje"><span>hace 90 días</span><span>hoy</span></div>
+
+  <footer>El sitio se revisa automáticamente cada 15 minutos. Monitoreo incluido en la mantención de Epic Flow AI.</footer>
+</main>
+<script>
+(function(){
+  var DATA = "{{DATA_URL}}";
+  function $(id){return document.getElementById(id)}
+  function pct(ok,total){return total? (100*ok/total) : null}
+  function fmtPct(p){return p===null? "—" : (p>=99.995? "100" : p.toFixed(2).replace(".",",")) + "%"}
+  function hace(iso){
+    var m = Math.round((Date.now()-new Date(iso).getTime())/60000);
+    if (m < 1) return "hace un momento";
+    if (m < 60) return "hace " + m + " min";
+    var h = Math.round(m/60); return "hace " + h + (h===1?" hora":" horas");
+  }
+  fetch(DATA + "?t=" + Math.floor(Date.now()/300000), {cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){
+      $("url").textContent = d.url.replace(/^https?:\/\//,"").replace(/\/$/,"");
+      var up = d.estado !== "caido";
+      var box = $("estado"); box.className = "estado " + (up ? "up" : "down");
+      box.querySelector("strong").textContent = up ? "Sitio operativo" : "Sitio con problemas";
+      box.querySelector("span").textContent = "Último chequeo " + hace(d.ultimo.ts);
+      var dias = d.dias || {}, keys = Object.keys(dias).sort();
+      function acum(n){ var ok=0,t=0; keys.slice(-n).forEach(function(k){ok+=dias[k][0];t+=dias[k][1]}); return pct(ok,t); }
+      $("up30").textContent = fmtPct(acum(30));
+      $("up90").textContent = fmtPct(acum(90));
+      $("ssl").textContent = d.ssl_dias == null ? "—" : (d.ssl_dias > 0 ? "Vigente" : "Vencido");
+      $("ssl").title = d.ssl_dias == null ? "" : ("vence en " + d.ssl_dias + " días");
+      $("ms").textContent = d.ultimo.ms ? (d.ultimo.ms/1000).toFixed(1).replace(".",",") + " s" : "—";
+      var barras = $("barras"), hoy = new Date();
+      for (var i = 89; i >= 0; i--) {
+        var f = new Date(hoy.getTime() - i*86400000).toISOString().slice(0,10);
+        var el = document.createElement("i"), v = dias[f];
+        if (v) { var p = pct(v[0], v[1]); el.className = p >= 99.5 ? "up" : (p >= 95 ? "warn" : "down");
+                 el.title = f + ": " + fmtPct(p); }
+        else { el.title = f + ": sin datos"; }
+        barras.appendChild(el);
+      }
+    })
+    .catch(function(){
+      var box = $("estado");
+      box.querySelector("strong").textContent = "No se pudo cargar el estado";
+      box.querySelector("span").className = "error";
+      box.querySelector("span").textContent = "Intenta de nuevo en unos minutos.";
+    });
+})();
+</script>
+</body>
+</html>
