@@ -166,6 +166,10 @@ def avisar(texto: str) -> None:
 
 
 def main() -> int:
+    if "--prueba-telegram" in sys.argv:
+        # Verifica secrets y entrega sin tocar datos (workflow_dispatch con prueba=true).
+        avisar("prueba de entrega: si lees esto, las alertas de caída van a llegar aquí.")
+        return 0
     sitios = json.loads((ROOT / "sites.json").read_text())
     DATA.mkdir(exist_ok=True)
     ahora = datetime.now(timezone.utc)

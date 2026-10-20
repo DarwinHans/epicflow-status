@@ -7,6 +7,11 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+    inputs:
+      prueba:
+        description: "Solo mandar un mensaje de prueba a Telegram"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -22,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Chequear sitios
-        run: python3 check.py
+        run: python3 check.py ${{ inputs.prueba && '--prueba-telegram' || '' }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
