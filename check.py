@@ -176,9 +176,12 @@ def main() -> int:
         rec = aplicar(rec, chequear_http(s["url"]), ahora)
         rec.update({"slug": s["slug"], "nombre": s["nombre"], "url": s["url"], "publico": s["publico"]})
         rec["ssl_dias"] = dias_ssl(s["url"])
-        # whois una vez al día: los registros limitan consultas y el dato cambia lento
+        # whois una vez al día si respondió, cada 6 h si falló: los registros limitan
+        # consultas y el dato cambia lento. whois.nic.cl suele no responder a IPs
+        # de GitHub y .cl no tiene RDAP, así que para .cl esto es best effort.
         ult = rec.get("dominio_chequeado")
-        if s.get("dominio") and (not ult or (ahora - datetime.fromisoformat(ult)).total_seconds() > 86400):
+        espera = 86400 if rec.get("dominio_dias") is not None else 6 * 3600
+        if s.get("dominio") and (not ult or (ahora - datetime.fromisoformat(ult)).total_seconds() > espera):
             d = dias_dominio(s["dominio"])
             if d is not None:
                 rec["dominio_dias"] = d
