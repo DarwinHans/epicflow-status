@@ -5,7 +5,9 @@ name: check
 # schedules de repos sin actividad en 60 días.
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    # Minutos desfasados: GitHub atrasa o salta los schedules en minutos
+    # redondos (:00/:15/:30/:45) por carga. El 2026-10-20 corrió 1 vez en 6 h.
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
     inputs:
       prueba:
