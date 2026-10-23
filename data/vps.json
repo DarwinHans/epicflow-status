@@ -2,10 +2,10 @@
  "fallos_seguidos": 0,
  "estado": "arriba",
  "ultimo": {
-  "ts": "2026-10-23T06:26:25+00:00",
+  "ts": "2026-10-23T11:58:01+00:00",
   "ok": true,
   "http": 200,
-  "ms": 556,
+  "ms": 597,
   "error": ""
  },
  "dias": {
@@ -22,8 +22,8 @@
    6
   ],
   "2026-10-23": [
-   2,
-   2
+   3,
+   3
   ]
  },
  "recientes": [
@@ -121,9 +121,14 @@
    1792736785,
    1,
    556
+  ],
+  [
+   1792756681,
+   1,
+   597
   ]
  ],
- "actualizado": "2026-10-23T06:26:25+00:00",
+ "actualizado": "2026-10-23T11:58:01+00:00",
  "slug": "vps",
  "nombre": "VPS de agentes (n8n)",
  "url": "https://n8n.nbow.io/healthz",
