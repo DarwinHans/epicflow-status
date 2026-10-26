@@ -2,10 +2,10 @@
  "fallos_seguidos": 0,
  "estado": "arriba",
  "ultimo": {
-  "ts": "2026-10-25T22:25:26+00:00",
+  "ts": "2026-10-26T00:37:09+00:00",
   "ok": true,
   "http": 200,
-  "ms": 720,
+  "ms": 771,
   "error": ""
  },
  "dias": {
@@ -32,6 +32,10 @@
   "2026-10-25": [
    7,
    7
+  ],
+  "2026-10-26": [
+   1,
+   1
   ]
  },
  "recientes": [
@@ -219,9 +223,14 @@
    1792967126,
    1,
    720
+  ],
+  [
+   1792975029,
+   1,
+   771
   ]
  ],
- "actualizado": "2026-10-25T22:25:26+00:00",
+ "actualizado": "2026-10-26T00:37:09+00:00",
  "slug": "monkey-training",
  "nombre": "Monkey Training",
  "url": "https://monkeytraining.cl/",
