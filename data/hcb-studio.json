@@ -2,10 +2,10 @@
  "fallos_seguidos": 0,
  "estado": "arriba",
  "ultimo": {
-  "ts": "2026-10-27T22:05:46+00:00",
+  "ts": "2026-10-28T01:12:16+00:00",
   "ok": true,
   "http": 200,
-  "ms": 212,
+  "ms": 260,
   "error": ""
  },
  "dias": {
@@ -40,6 +40,10 @@
   "2026-10-27": [
    5,
    5
+  ],
+  "2026-10-28": [
+   1,
+   1
   ]
  },
  "recientes": [
@@ -277,14 +281,19 @@
    1793138746,
    1,
    212
+  ],
+  [
+   1793149936,
+   1,
+   260
   ]
  ],
- "actualizado": "2026-10-27T22:05:46+00:00",
+ "actualizado": "2026-10-28T01:12:16+00:00",
  "slug": "hcb-studio",
  "nombre": "HCB Studio",
  "url": "https://hcbstudio.cl/",
  "publico": false,
  "ssl_dias": 78,
- "dominio_chequeado": "2026-10-27T00:53:29+00:00",
- "dominio_dias": 164
+ "dominio_chequeado": "2026-10-28T01:12:16+00:00",
+ "dominio_dias": 163
 }
