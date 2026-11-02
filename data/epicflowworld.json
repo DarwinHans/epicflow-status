@@ -2,10 +2,10 @@
  "fallos_seguidos": 0,
  "estado": "arriba",
  "ultimo": {
-  "ts": "2026-11-02T08:09:13+00:00",
+  "ts": "2026-11-02T18:26:40+00:00",
   "ok": true,
   "http": 200,
-  "ms": 365,
+  "ms": 787,
   "error": ""
  },
  "dias": {
@@ -62,8 +62,8 @@
    5
   ],
   "2026-11-02": [
-   2,
-   2
+   3,
+   3
   ]
  },
  "recientes": [
@@ -431,9 +431,14 @@
    1793606953,
    1,
    365
+  ],
+  [
+   1793644000,
+   1,
+   787
   ]
  ],
- "actualizado": "2026-11-02T08:09:13+00:00",
+ "actualizado": "2026-11-02T18:26:40+00:00",
  "slug": "epicflowworld",
  "nombre": "Epic Flow World",
  "url": "https://epicflowworld.com/",
