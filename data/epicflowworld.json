@@ -2,10 +2,10 @@
  "fallos_seguidos": 0,
  "estado": "arriba",
  "ultimo": {
-  "ts": "2026-11-10T03:44:39+00:00",
+  "ts": "2026-11-10T11:50:00+00:00",
   "ok": true,
   "http": 200,
-  "ms": 651,
+  "ms": 549,
   "error": ""
  },
  "dias": {
@@ -94,16 +94,11 @@
    3
   ],
   "2026-11-10": [
-   1,
-   1
+   2,
+   2
   ]
  },
  "recientes": [
-  [
-   1792596689,
-   1,
-   600
-  ],
   [
    1792611061,
    1,
@@ -578,14 +573,19 @@
    1794282279,
    1,
    651
+  ],
+  [
+   1794311400,
+   1,
+   549
   ]
  ],
- "actualizado": "2026-11-10T03:44:39+00:00",
+ "actualizado": "2026-11-10T11:50:00+00:00",
  "slug": "epicflowworld",
  "nombre": "Epic Flow World",
  "url": "https://epicflowworld.com/",
  "publico": false,
- "ssl_dias": 84,
- "dominio_dias": 201,
- "dominio_chequeado": "2026-11-09T11:15:39+00:00"
+ "ssl_dias": 83,
+ "dominio_dias": 200,
+ "dominio_chequeado": "2026-11-10T11:50:00+00:00"
 }
