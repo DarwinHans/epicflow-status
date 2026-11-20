@@ -1,11 +1,11 @@
 {
- "fallos_seguidos": 22,
+ "fallos_seguidos": 23,
  "estado": "caido",
  "ultimo": {
-  "ts": "2026-11-20T08:37:02+00:00",
+  "ts": "2026-11-20T17:13:44+00:00",
   "ok": false,
   "http": null,
-  "ms": 116,
+  "ms": 63,
   "error": "[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1081)"
  },
  "dias": {
@@ -135,15 +135,10 @@
   ],
   "2026-11-20": [
    0,
-   2
+   3
   ]
  },
  "recientes": [
-  [
-   1793124242,
-   1,
-   625
-  ],
   [
    1793138746,
    1,
@@ -618,9 +613,14 @@
    1795163822,
    0,
    116
+  ],
+  [
+   1795194824,
+   0,
+   63
   ]
  ],
- "actualizado": "2026-11-20T08:37:02+00:00",
+ "actualizado": "2026-11-20T17:13:44+00:00",
  "slug": "epicflowworld",
  "nombre": "Epic Flow World",
  "url": "https://epicflowworld.com/",
